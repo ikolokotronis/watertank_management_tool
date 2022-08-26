@@ -12,7 +12,8 @@ class Manager:
         self.menu_options = {
             '1': self.create_new_tank,
             '2': self.manage_tanks,
-            '3': self.view_all_tanks
+            '3': self.view_all_tanks,
+            '4': self.exit
         }
 
     def exit(self):

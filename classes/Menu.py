@@ -9,7 +9,8 @@ class Menu:
         for i, option in enumerate(self.options):
             print(f"{i+1}. {option}")
 
-    def get_choice(self):
+    @staticmethod
+    def get_choice():
         print("\n")
         choice = input("Enter your choice: ")
         print("\n")
