@@ -1,1 +1,1 @@
-MENU_OPTIONS = ['Create a new tank', 'Manage tanks']
+MENU_OPTIONS = ['Create a new tank', 'View all tanks']

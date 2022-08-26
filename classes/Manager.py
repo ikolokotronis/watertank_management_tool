@@ -9,7 +9,8 @@ class Manager:
         self.menu = Menu()
         self.tank_holder = TankHolder()
         self.menu_options = {
-            '1': self.create_new_tank
+            '1': self.create_new_tank,
+            '2': self.view_all_tanks
         }
 
     def exit(self):
@@ -19,13 +20,17 @@ class Manager:
         while self.is_running is True:
             self.menu.print_menu()
             choice = self.menu.get_choice()
+            self.__execute(choice)
 
     def __execute(self, choice):
-        try:
-            self.menu_options.get(choice, print('No such option!'))()
-        except InvalidChoice:
-            print("No such option!")
+        self.menu_options.get(choice, None)()
 
-    def create_new_tank(self, name, capacity):
+    def create_new_tank(self):
+        name = input('Tank name: ')
+        capacity = int(input('Tank capacity: '))
         tank = TankFactory(name, capacity)
         self.tank_holder.add_to_storage(tank)
+
+    def view_all_tanks(self):
+        for tank in self.tank_holder.storage:
+            print(tank.name, tank.capacity)
