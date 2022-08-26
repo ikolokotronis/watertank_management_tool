@@ -2,12 +2,17 @@ class Tank:
     def __init__(self, name, capacity):
         self.name = name
         self.capacity = capacity
+        self.water_volume = 0
+        self.options = {
+            '1': self.pour_water,
+            '2': self.pour_out_water
+        }
 
     def pour_water(self, volume):
-        if self.capacity + volume > self.capacity:
+        if self.capacity - volume < 0:
             print('Tank does not have enough capacity!')
             return
-        self.capacity = self.capacity + volume
+        self.water_volume += volume
 
     def pour_out_water(self, volume):
         if self.capacity - volume < self.capacity:

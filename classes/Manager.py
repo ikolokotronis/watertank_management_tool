@@ -1,6 +1,7 @@
 from classes.Menu import Menu
 from classes.TankHolder import TankHolder
 from factories.TankFactory import TankFactory
+from factories.tank_options import TANK_OPTIONS
 
 
 class Manager:
@@ -10,7 +11,8 @@ class Manager:
         self.tank_holder = TankHolder()
         self.menu_options = {
             '1': self.create_new_tank,
-            '2': self.view_all_tanks
+            '2': self.manage_tanks,
+            '3': self.view_all_tanks
         }
 
     def exit(self):
@@ -22,15 +24,40 @@ class Manager:
             choice = self.menu.get_choice()
             self.__execute(choice)
 
+    def show_error(self):
+        print('No such option!')
+
     def __execute(self, choice):
-        self.menu_options.get(choice, None)()
+        self.menu_options.get(choice, self.show_error)()
 
     def create_new_tank(self):
         name = input('Tank name: ')
         capacity = int(input('Tank capacity: '))
-        tank = TankFactory(name, capacity)
+        tank = TankFactory.produce(name, capacity)
         self.tank_holder.add_to_storage(tank)
 
+    def manage_tanks(self):
+        for i, tank in enumerate(self.tank_holder.storage):
+            print('\n')
+            print(f'{i+1}. {tank.name}')
+            print(f'Capacity: {tank.capacity}')
+            print(f'Water volume: {tank.water_volume}')
+            print('\n')
+        tank_choice = int(input('Tank to manage: '))
+        tank = self.tank_holder.storage[tank_choice-1]
+        print(f'You chose: {tank.name}')
+        print('\n')
+        for i, option in enumerate(TANK_OPTIONS):
+            print(i+1, option)
+        print('\n')
+        operation_choice = input('Choose operation: ')
+        volume_amount = int(input('Volume amount: '))
+        tank.options.get(operation_choice, None)(volume_amount)
+        print(f'Operation finished successfully')
+
     def view_all_tanks(self):
-        for tank in self.tank_holder.storage:
-            print(tank.name, tank.capacity)
+        for i, tank in enumerate(self.tank_holder.storage):
+            print(f'{tank.name}')
+            print(f'Capacity: {tank.capacity}')
+            print(f'Water volume: {tank.water_volume}')
+            print('\n')

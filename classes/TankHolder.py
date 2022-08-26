@@ -4,4 +4,6 @@ class TankHolder:
 
     def add_to_storage(self, tank):
         self.storage.append(tank)
+        print('\n')
         print('Tank added to storage')
+        print('\n')
