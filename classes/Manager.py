@@ -1,5 +1,5 @@
 from classes.Menu import Menu
-from classes.TankHolder import TankHolder
+from classes.TankStorage import TankHolder
 from factories.TankFactory import TankFactory
 from factories.tank_options import TANK_OPTIONS
 
@@ -52,8 +52,8 @@ class Manager:
         print('\n')
         operation_choice = input('Choose operation: ')
         volume_amount = int(input('Volume amount: '))
-        tank.options.get(operation_choice, None)(volume_amount)
-        print(f'Operation finished successfully')
+        operation = tank.options.get(operation_choice, None)(volume_amount)
+        print('Operation finished successfully') if operation else print('Operation failed')
 
     def view_all_tanks(self):
         for i, tank in enumerate(self.tank_holder.storage):

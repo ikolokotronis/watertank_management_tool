@@ -13,17 +13,20 @@ class Tank:
             print('Tank does not have enough capacity!')
             return
         self.water_volume += volume
+        return 'success'
 
     def pour_out_water(self, volume):
-        if self.capacity - volume < self.capacity:
+        if self.water_volume - volume < 0:
             print('Tank does not have this much water to pour out!')
             return
-        self.capacity = self.capacity - volume
+        self.water_volume -= volume
+        return 'success'
 
     def transfer_water(self, from_tank, volume):
-        if self.capacity + volume > self.capacity:
+        if self.water_volume + volume > self.capacity:
             print('Tank does not have this much capacity!')
             return
-        self.capacity = self.capacity + volume
-        from_tank.capacity = from_tank.capacity - volume
+        self.water_volume += volume
+        from_tank.capacity -= volume
+        return 'success'
 
