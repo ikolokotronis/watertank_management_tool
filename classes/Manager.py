@@ -38,6 +38,10 @@ class Manager:
         self.tank_holder.add_to_storage(tank)
 
     def manage_tanks(self):
+        if not self.tank_holder.storage:
+            print('No tanks stored!')
+            print('\n')
+            return
         for i, tank in enumerate(self.tank_holder.storage):
             print('\n')
             print(f'{i+1}. {tank.name}')
@@ -55,8 +59,12 @@ class Manager:
         volume_amount = int(input('Volume amount: '))
         operation = tank.options.get(operation_choice, None)(volume_amount)
         print('Operation finished successfully') if operation else print('Operation failed')
+        print('\n')
 
     def view_all_tanks(self):
+        if not self.tank_holder.storage:
+            print('No tanks stored!')
+            print('\n')
         for i, tank in enumerate(self.tank_holder.storage):
             print(f'{tank.name}')
             print(f'Capacity: {tank.capacity}')
