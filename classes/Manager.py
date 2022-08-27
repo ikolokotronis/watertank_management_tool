@@ -1,4 +1,5 @@
 from classes.Menu import Menu
+from classes.OperationManager import OperationManager
 from classes.TankStorage import TankHolder
 from factories.TankFactory import TankFactory
 from constants.tank_options import TANK_OPTIONS
@@ -9,11 +10,13 @@ class Manager:
         self.is_running = True
         self.menu = Menu()
         self.tank_holder = TankHolder()
+        self.operation_manager = OperationManager(tank_holder=self.tank_holder)
         self.menu_options = {
             '1': self.create_new_tank,
             '2': self.manage_tanks,
             '3': self.view_all_tanks,
-            '4': self.exit
+            '4': self.operation_manager.handle_operations,
+            '5': self.exit
         }
 
     def exit(self):
@@ -36,6 +39,17 @@ class Manager:
         capacity = int(input('Tank capacity: '))
         tank = TankFactory.produce(name, capacity)
         self.tank_holder.add_to_storage(tank)
+
+    def view_all_tanks(self):
+        if not self.tank_holder.storage:
+            print('No tanks stored!')
+            print('\n')
+            return
+        for i, tank in enumerate(self.tank_holder.storage):
+            print(f'{tank.name}')
+            print(f'Capacity: {tank.capacity}')
+            print(f'Water volume: {tank.water_volume}')
+            print('\n')
 
     def manage_tanks(self):
         if not self.tank_holder.storage:
@@ -60,13 +74,3 @@ class Manager:
         operation = tank.options.get(operation_choice, None)(volume_amount)
         print('Operation finished successfully') if operation else print('Operation failed')
         print('\n')
-
-    def view_all_tanks(self):
-        if not self.tank_holder.storage:
-            print('No tanks stored!')
-            print('\n')
-        for i, tank in enumerate(self.tank_holder.storage):
-            print(f'{tank.name}')
-            print(f'Capacity: {tank.capacity}')
-            print(f'Water volume: {tank.water_volume}')
-            print('\n')

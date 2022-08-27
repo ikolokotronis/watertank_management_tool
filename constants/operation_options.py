@@ -1,0 +1,1 @@
+OPERATION_OPTIONS = ['Find tank with most water volume', 'Find most filled tank', 'Find empty tanks']
