@@ -5,7 +5,8 @@ class Tank:
         self.water_volume = 0
         self.options = {
             '1': self.pour_water,
-            '2': self.pour_out_water
+            '2': self.pour_out_water,
+            '3': self.transfer_water
         }
 
     def pour_water(self, volume):
