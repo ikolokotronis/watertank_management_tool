@@ -45,6 +45,7 @@ class TankManager:
         print('\n')
         operation_choice = input('Choose operation: ')
         volume_amount = int(input('Volume amount: '))
+        operation = ''
         try:
             operation = tank.options.get(operation_choice, Messenger.no_such_option)(volume_amount)
         except InvalidChoice:
