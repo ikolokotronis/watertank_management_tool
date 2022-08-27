@@ -1,4 +1,6 @@
+from classes.Messenger import Messenger
 from constants.operation_options import OPERATION_OPTIONS
+from exceptions.InvalidChoice import InvalidChoice
 
 
 class OperationManager:
@@ -9,9 +11,6 @@ class OperationManager:
             '3': self.find_empty_tanks
         }
         self.tank_holder = tank_holder
-
-    def show_error(self):
-        print('No such option!')
 
     def handle_operations(self):
         if not self.tank_holder.storage:
@@ -26,7 +25,10 @@ class OperationManager:
             '3': self.find_empty_tanks
         }
         choice = input('Your choice: ')
-        options.get(choice, self.show_error)()
+        try:
+            options.get(choice, Messenger.no_such_option)()
+        except InvalidChoice:
+            print("No such option!")
 
     def find_tank_with_most_water_volume(self):
         if not self.tank_holder.storage:
