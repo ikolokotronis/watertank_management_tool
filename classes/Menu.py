@@ -1,4 +1,4 @@
-from factories.menu_options import MENU_OPTIONS
+from constants.menu_options import MENU_OPTIONS
 
 
 class Menu:

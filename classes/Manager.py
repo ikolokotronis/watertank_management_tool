@@ -1,7 +1,7 @@
 from classes.Menu import Menu
 from classes.TankStorage import TankHolder
 from factories.TankFactory import TankFactory
-from factories.tank_options import TANK_OPTIONS
+from constants.tank_options import TANK_OPTIONS
 
 
 class Manager:
