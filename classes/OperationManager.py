@@ -1,5 +1,5 @@
 from classes.Messenger import Messenger
-from constants.operation_options import OPERATION_OPTIONS
+from constants.options import OPERATION_OPTIONS
 from exceptions.InvalidChoice import InvalidChoice
 
 

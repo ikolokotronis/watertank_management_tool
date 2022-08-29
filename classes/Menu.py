@@ -1,4 +1,4 @@
-from constants.menu_options import MENU_OPTIONS
+from constants.options import MENU_OPTIONS
 
 
 class Menu:
