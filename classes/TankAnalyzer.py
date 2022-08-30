@@ -40,7 +40,18 @@ class TankAnalyzer:
         print('\n')
 
     def find_most_filled_tank(self):
-        pass
+        if not self.tank_holder.check_if_storage_is_empty():
+            return Enum.FAILURE
+        calculations = []
+        for tank in self.tank_holder.storage:
+            calculation = tank.capacity - tank.water_volume
+            calculations.append(calculation)
+        tank_index = calculations.index(min(calculations))
+        tank = self.tank_holder.storage[tank_index]
+        print(f'Name: {tank.name}')
+        print(f'Capacity: {tank.capacity}')
+        print(f'Water volume: {tank.water_volume}')
+        print('\n')
 
     def find_empty_tanks(self):
         if not self.tank_holder.check_if_storage_is_empty():
