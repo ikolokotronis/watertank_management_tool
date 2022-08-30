@@ -4,7 +4,7 @@ from constants.options import OPERATION_OPTIONS
 from exceptions.InvalidChoice import InvalidChoice
 
 
-class OperationManager:
+class TankAnalyzer:
     def __init__(self, tank_holder, event_sourcer):
         self.options = {
             '1': self.find_tank_with_most_water_volume,

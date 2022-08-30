@@ -27,6 +27,9 @@ class TankManager:
             return
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
+        self.manage_tank_operations(tank)
+
+    def manage_tank_operations(self, tank):
         for i, option in enumerate(TANK_OPTIONS):  # one method
             print(i+1, option)
         print('\n')
