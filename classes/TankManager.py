@@ -48,7 +48,14 @@ class TankManager:
             event = EventSourcer.create_event(operation_name, tank, Enum.SUCCESS, 'Pour out water')
             self.event_sourcer.add_to_history(event)
         elif operation_choice == '3':
-            pass
+            self.tank_holder.display_all_tanks()
+            from_tank_choice = input('From tank: ')
+            from_tank = self.tank_holder.storage[int(from_tank_choice) - 1]
+            volume_amount = int(input('Volume amount: '))
+            operation_name = input('Name your operation: ')
+            tank.transfer_water(from_tank, volume_amount)
+            event = EventSourcer.create_event(operation_name, tank, Enum.SUCCESS, 'Transfer water')
+            self.event_sourcer.add_to_history(event)
         else:
             print('No such option!')
             return

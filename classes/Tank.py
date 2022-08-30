@@ -1,3 +1,6 @@
+from classes.Enum import Enum
+
+
 class Tank:
     def __init__(self, name, capacity):
         self.name = name
@@ -14,19 +17,22 @@ class Tank:
             print('Tank does not have enough capacity!')
             return
         self.water_volume += volume
-        return 'success'
+        return Enum.SUCCESS
 
     def pour_out_water(self, volume):
         if self.water_volume - volume < 0:
             print('Tank does not have this much water to pour out!')
             return
         self.water_volume -= volume
-        return 'success'
+        return Enum.SUCCESS
 
-    def transfer_water(self, from_tank, volume):  # if or match case
+    def transfer_water(self, from_tank, volume):
         if self.water_volume + volume > self.capacity:
-            print('Tank does not have this much capacity!')
+            print('Target tank does not have this much capacity!')
+            return
+        if from_tank.water_volume - volume < 0:
+            print('From tank does not have this much water!')
             return
         self.water_volume += volume
-        from_tank.capacity -= volume
-        return 'success'
+        from_tank.water_volume -= volume
+        return Enum.SUCCESS
