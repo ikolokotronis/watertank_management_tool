@@ -1,12 +1,13 @@
-from classes.Messenger import Messenger
+from classes.Enum import StateStatus
+from classes.EventSourcer import EventSourcer
 from constants.options import TANK_OPTIONS
-from exceptions.InvalidChoice import InvalidChoice
 from factories.TankFactory import TankFactory
 
 
 class TankManager:
-    def __init__(self, tank_holder):
+    def __init__(self, tank_holder, event_sourcer):
         self.tank_holder = tank_holder
+        self.event_sourcer = event_sourcer
 
     def create_new_tank(self):
         name = input('Tank name: ')
@@ -14,43 +15,39 @@ class TankManager:
         tank = TankFactory.produce(name, capacity)
         self.tank_holder.add_to_storage(tank)
 
-    def view_all_tanks(self):
-        if not self.tank_holder.storage:
-            print('No tanks stored!')
-            print('\n')
-            return
-        for i, tank in enumerate(self.tank_holder.storage):
-            print(f'{tank.name}')
-            print(f'Capacity: {tank.capacity}')
-            print(f'Water volume: {tank.water_volume}')
-            print('\n')
-
-    def manage_tanks(self):
-        if not self.tank_holder.storage:  # one method (validation)
-            print('No tanks stored!\n')
-            return
-        for i, tank in enumerate(self.tank_holder.storage):  # one method (display tanks)
-            print('\n')
-            print(f'{i+1}. {tank.name}')
-            print(f'Capacity: {tank.capacity}')
-            print(f'Water volume: {tank.water_volume}')
-            print('\n')
-        tank_choice = int(input('Tank to manage: '))  # one method
-        tank = self.tank_holder.storage[tank_choice-1]
+    def get_tank_choice(self):
+        tank_choice = int(input('Tank to manage: '))
+        tank = self.tank_holder.storage[tank_choice - 1]
         print(f'You chose: {tank.name}')
         print('\n')
+        return tank
+
+    def manage_tanks(self):
+        if self.tank_holder.check_if_storage_is_empty() == StateStatus.FAILURE:
+            return
+        self.tank_holder.display_all_tanks()
+        tank = self.get_tank_choice()
         for i, option in enumerate(TANK_OPTIONS):  # one method
             print(i+1, option)
         print('\n')
         operation_choice = input('Choose operation: ')
-        volume_amount = int(input('Volume amount: '))
-        try:
-            operation_state = tank.options.get(operation_choice, Messenger.no_such_option)(volume_amount)
-        except InvalidChoice:
-            print("No such option!")
-            print('Operation failed')
+        event = {}
+        if operation_choice == '1':
+            volume_amount = int(input('Volume amount: '))
+            operation_name = input('Name your operation: ')
+            tank.pour_water(volume_amount)
+            event = EventSourcer.create_event(operation_name, tank, StateStatus.SUCCESS, 'Pour water')
+            self.event_sourcer.add_to_history(event)
+        elif operation_choice == '2':
+            volume_amount = int(input('Volume amount: '))
+            operation_name = input('Name your operation: ')
+            tank.pour_out_water(volume_amount)
+            event = EventSourcer.create_event(operation_name, tank, StateStatus.SUCCESS, 'Pour out water')
+            self.event_sourcer.add_to_history(event)
+        elif operation_choice == '3':
+            pass
         else:
-            print('Operation finished successfully')
-            print('\n')
-
-        return operation_state
+            print('No such option!')
+            return
+        event_state = event['status']
+        return event_state
