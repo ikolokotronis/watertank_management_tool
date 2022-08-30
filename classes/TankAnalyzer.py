@@ -1,4 +1,4 @@
-from classes.Enum import Enum
+from classes.Enum import States
 from classes.Messenger import Messenger
 from constants.options import OPERATION_OPTIONS
 from exceptions.InvalidChoice import InvalidChoice
@@ -16,7 +16,7 @@ class TankAnalyzer:
 
     def handle_operations(self):
         if not self.tank_holder.check_if_storage_is_empty():
-            return Enum.FAILURE
+            return States.FAILURE
         for i, option in enumerate(OPERATION_OPTIONS):
             print(f"{i+1}. {option}")
         options = {
@@ -32,7 +32,7 @@ class TankAnalyzer:
 
     def find_tank_with_most_water_volume(self):
         if not self.tank_holder.check_if_storage_is_empty():
-            return Enum.FAILURE
+            return States.FAILURE
         tank = max(self.tank_holder.storage)
         print(f'Name: {tank.name}')
         print(f'Capacity: {tank.capacity}')
@@ -41,7 +41,7 @@ class TankAnalyzer:
 
     def find_most_filled_tank(self):
         if not self.tank_holder.check_if_storage_is_empty():
-            return Enum.FAILURE
+            return States.FAILURE
         calculations = []
         for tank in self.tank_holder.storage:
             calculation = tank.capacity - tank.water_volume
@@ -55,7 +55,7 @@ class TankAnalyzer:
 
     def find_empty_tanks(self):
         if not self.tank_holder.check_if_storage_is_empty():
-            return Enum.FAILURE
+            return States.FAILURE
         for i, tank in enumerate(self.tank_holder.storage):
             if tank.water_volume == 0:
                 print(f'{tank.name}')

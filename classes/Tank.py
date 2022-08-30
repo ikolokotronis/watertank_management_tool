@@ -1,4 +1,4 @@
-from classes.Enum import Enum
+from classes.Enum import States
 
 
 class Tank:
@@ -17,14 +17,14 @@ class Tank:
             print('Tank does not have enough capacity!')
             return
         self.water_volume += volume
-        return Enum.SUCCESS
+        return States.SUCCESS
 
     def pour_out_water(self, volume):
         if self.water_volume - volume < 0:
             print('Tank does not have this much water to pour out!')
             return
         self.water_volume -= volume
-        return Enum.SUCCESS
+        return States.SUCCESS
 
     def transfer_water(self, from_tank, volume):
         if self.water_volume + volume > self.capacity:
@@ -35,4 +35,4 @@ class Tank:
             return
         self.water_volume += volume
         from_tank.water_volume -= volume
-        return Enum.SUCCESS
+        return States.SUCCESS

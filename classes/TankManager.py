@@ -1,4 +1,4 @@
-from classes.Enum import Enum
+from classes.Enum import States
 from classes.EventSourcer import EventSourcer
 from constants.options import TANK_OPTIONS
 from factories.TankFactory import TankFactory
@@ -39,13 +39,13 @@ class TankManager:
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.pour_water(volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, Enum.SUCCESS, 'Pour water')
+            event = EventSourcer.create_event(operation_name, tank, States.SUCCESS, 'Pour water')
             self.event_sourcer.add_to_history(event)
         elif operation_choice == '2':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.pour_out_water(volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, Enum.SUCCESS, 'Pour out water')
+            event = EventSourcer.create_event(operation_name, tank, States.SUCCESS, 'Pour out water')
             self.event_sourcer.add_to_history(event)
         elif operation_choice == '3':
             self.tank_holder.display_all_tanks()
@@ -54,7 +54,7 @@ class TankManager:
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.transfer_water(from_tank, volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, Enum.SUCCESS, 'Transfer water')
+            event = EventSourcer.create_event(operation_name, tank, States.SUCCESS, 'Transfer water')
             self.event_sourcer.add_to_history(event)
         else:
             print('No such option!')

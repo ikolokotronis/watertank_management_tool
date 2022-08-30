@@ -19,3 +19,14 @@ class EventSourcer:
     def add_to_history(self, event):
         self.history[event['name']] = event
         print('History: ', self.history)
+
+    def event_sourcing(self, f):
+        def wrapper(tank, *args):
+            state = f(tank, *args)
+            if state == States.SUCCESS or state == States.FAILURE:
+                raise ValueError("Invalid use of event sourcer!")
+
+            with open(EventSourcerProperty.FILEPATH, 'w') as file:
+                file.write(state, tank.name, ...)
+
+        return wrapper
