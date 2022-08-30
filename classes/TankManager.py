@@ -1,4 +1,4 @@
-from classes.Enum import StateStatus
+from classes.Enum import Enum
 from classes.EventSourcer import EventSourcer
 from constants.options import TANK_OPTIONS
 from factories.TankFactory import TankFactory
@@ -23,7 +23,7 @@ class TankManager:
         return tank
 
     def manage_tanks(self):
-        if self.tank_holder.check_if_storage_is_empty() == StateStatus.FAILURE:
+        if self.tank_holder.check_if_storage_is_empty() == Enum.FAILURE:
             return
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
@@ -39,13 +39,13 @@ class TankManager:
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.pour_water(volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, StateStatus.SUCCESS, 'Pour water')
+            event = EventSourcer.create_event(operation_name, tank, Enum.SUCCESS, 'Pour water')
             self.event_sourcer.add_to_history(event)
         elif operation_choice == '2':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.pour_out_water(volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, StateStatus.SUCCESS, 'Pour out water')
+            event = EventSourcer.create_event(operation_name, tank, Enum.SUCCESS, 'Pour out water')
             self.event_sourcer.add_to_history(event)
         elif operation_choice == '3':
             pass

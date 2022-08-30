@@ -1,7 +1,4 @@
-from enum import Enum
-
-
-class StateStatus(Enum):
+class Enum:
     SUCCESS = 1
     FAILURE = 0
 

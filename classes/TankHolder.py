@@ -1,4 +1,4 @@
-from classes.Enum import StateStatus
+from classes.Enum import Enum
 
 
 class TankHolder:
@@ -14,8 +14,8 @@ class TankHolder:
     def check_if_storage_is_empty(self):
         if not self.storage:
             print('No tanks stored!\n')
-            return StateStatus.FAILURE
-        return StateStatus.SUCCESS
+            return Enum.FAILURE
+        return Enum.SUCCESS
 
     def display_all_tanks(self):
         for i, tank in enumerate(self.storage):
