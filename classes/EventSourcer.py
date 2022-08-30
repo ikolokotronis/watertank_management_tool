@@ -1,5 +1,7 @@
 import datetime
 
+from classes.Enum import States, EventSourcerProperty
+
 
 class EventSourcer:
     def __init__(self):
@@ -18,15 +20,17 @@ class EventSourcer:
 
     def add_to_history(self, event):
         self.history[event['name']] = event
-        print('History: ', self.history)
+        print('History:', self.history)
 
     def event_sourcing(self, f):
-        def wrapper(tank, *args):
-            state = f(tank, *args)
+        def wrapper(operation_properties):
+            state = f(operation_properties)
             if state == States.SUCCESS or state == States.FAILURE:
                 raise ValueError("Invalid use of event sourcer!")
-
-            with open(EventSourcerProperty.FILEPATH, 'w') as file:
-                file.write(state, tank.name, ...)
-
+            event = EventSourcer.create_event(operation_properties['operation_name'], operation_properties['tank'],
+                                              operation_properties['status'], operation_properties['operation_type'])
+            self.history[event['operation_name']] = event
+            print(event)
+            # with open(EventSourcerProperty.FILE_PATH, 'w') as file:
+            #     file.write(state)
         return wrapper

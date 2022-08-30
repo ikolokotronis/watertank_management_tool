@@ -23,30 +23,29 @@ class TankManager:
         return tank
 
     def manage_tanks(self):
-        if self.tank_holder.check_if_storage_is_empty() == Enum.FAILURE:
+        if self.tank_holder.check_if_storage_is_empty() == States.FAILURE:
             return
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
         self.manage_tank_operations(tank)
 
+    @EventSourcer.event_sourcing
     def manage_tank_operations(self, tank):
         for i, option in enumerate(TANK_OPTIONS):  # one method
             print(i+1, option)
         print('\n')
         operation_choice = input('Choose operation: ')
-        event = {}
+        operation_type = ''
         if operation_choice == '1':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.pour_water(volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, States.SUCCESS, 'Pour water')
-            self.event_sourcer.add_to_history(event)
+            operation_type = 'Pour water'
         elif operation_choice == '2':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.pour_out_water(volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, States.SUCCESS, 'Pour out water')
-            self.event_sourcer.add_to_history(event)
+            operation_type = 'Pour out water'
         elif operation_choice == '3':
             self.tank_holder.display_all_tanks()
             from_tank_choice = input('From tank: ')
@@ -54,10 +53,16 @@ class TankManager:
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
             tank.transfer_water(from_tank, volume_amount)
-            event = EventSourcer.create_event(operation_name, tank, States.SUCCESS, 'Transfer water')
-            self.event_sourcer.add_to_history(event)
+            operation_type = 'Transfer water'
         else:
             print('No such option!')
             return
-        event_state = event['status']
-        return event_state
+        operation_properties = {
+            'operation_choice': operation_choice,
+            'operation_type': operation_type,
+            'operation_name': operation_name,
+            'status': States.SUCCESS,
+            'tank': tank
+
+        }
+        return operation_properties
