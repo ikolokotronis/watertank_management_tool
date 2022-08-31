@@ -60,11 +60,11 @@ class TankAnalyzer:
                 print('\n')
 
     def find_tank_with_most_fails(self):
-        print('yeaas')
-        calculations = {}
-        for key, value in self.event_sourcer.history.items():
-            print(key, value)
-            if key == 'status' and value == 0:
-                calculations[key] = value
-        print(calculations)
+        pass  # TODO
+        # calculations = {}
+        # for key, value in self.event_sourcer.history.items():
+        #     print(key, value)
+        #     if key == 'status' and value == 0:
+        #         calculations[key] = value
+        # print(calculations)
 

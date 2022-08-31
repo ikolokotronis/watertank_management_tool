@@ -22,7 +22,7 @@ class TankManager:
         print('\n')
         return tank
 
-    def manage_tanks(self):
+    def execute(self):
         if self.tank_holder.check_if_storage_is_empty() == States.FAILURE:
             return
         self.tank_holder.display_all_tanks()

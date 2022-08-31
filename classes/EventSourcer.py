@@ -4,8 +4,49 @@ from classes.Enum import States
 
 
 class EventSourcer:
-    def __init__(self):
+    def __init__(self, tank_holder):
+        self.tank_holder = tank_holder
         self.history = {}
+
+    def get_tank_choice(self):
+        tank_choice = int(input('Tank choice: '))
+        tank = self.tank_holder.storage[tank_choice - 1]
+        print(f'You chose: {tank.name}')
+        print('\n')
+        return tank
+
+    def execute(self):
+        self.tank_holder.display_all_tanks()
+        tank = self.get_tank_choice()
+        self.check_state(tank)
+
+    def check_state(self, tank):
+        state_volume = 0
+        for key, value in self.history.items():
+            # print(key, value['tank_name'])
+            if value['tank_name'] == tank.name:
+                items = [i for i in value.items()]
+                if 'Pour water' in items[2]:
+                    for props_key, props_value in items:
+                        if props_key == 'water_volume':
+                            state_volume += props_value
+                elif 'Pour out water' in items[2]:
+                    for props_key, props_value in items:
+                        if props_key == 'water_volume':
+                            state_volume -= props_value
+                elif 'Transfer water' in items[2]:
+                    for props_key, props_value in items:
+                        if props_key == 'water_volume':
+                            state_volume += props_value
+        print(state_volume)
+        if tank.water_volume == state_volume:
+            print('OK')
+            return States.SUCCESS
+        elif tank.water_volume != state_volume:
+            print('NOT OK')
+            return States.FAILURE
+        print('Something went wrong')
+        return States.FAILURE
 
     @staticmethod
     def create_event(operation_name, tank, status, operation_type, water_volume):
@@ -13,7 +54,7 @@ class EventSourcer:
         date_time = now.strftime("%d/%m/%Y %H:%M:%S")
         event = {
             'operation_name': operation_name,
-            'tank': tank,
+            'tank_name': tank.name,
             'operation_type': operation_type,
             'water_volume': water_volume,
             'status': status,

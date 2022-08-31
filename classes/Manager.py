@@ -12,15 +12,16 @@ class Manager:
         self.is_running = True
         self.menu = Menu()
         self.tank_holder = TankHolder()
-        self.event_sourcer = EventSourcer()
+        self.event_sourcer = EventSourcer(tank_holder=self.tank_holder)
         self.tank_analyzer = TankAnalyzer(tank_holder=self.tank_holder, event_sourcer=self.event_sourcer)
         self.tank_manager = TankManager(tank_holder=self.tank_holder, event_sourcer=self.event_sourcer)
         self.menu_options = {
             '1': self.tank_manager.create_new_tank,
-            '2': self.tank_manager.manage_tanks,
+            '2': self.tank_manager.execute,
             '3': self.tank_holder.display_all_tanks,
             '4': self.tank_analyzer.handle_operations,
-            '5': self.exit
+            '5': self.event_sourcer.execute,
+            '6': self.exit
         }
 
     def exit(self):
