@@ -1,6 +1,6 @@
 import datetime
 
-from classes.Enum import States, EventSourcerProperty
+from classes.Enum import States
 
 
 class EventSourcer:
@@ -8,13 +8,15 @@ class EventSourcer:
         self.history = {}
 
     @staticmethod
-    def create_event(name, tank, operation, status):
+    def create_event(operation_name, tank, status, operation_type):
+        now = datetime.datetime.now()
+        date_time = now.strftime("%d/%m/%Y %H:%M:%S")
         event = {
-            'name': name,
+            'operation_name': operation_name,
             'tank': tank,
-            'operation': operation,
+            'operation_type': operation_type,
             'status': status,
-            'date': datetime.datetime.now()
+            'date_time': date_time
         }
         return event
 
@@ -22,15 +24,16 @@ class EventSourcer:
         self.history[event['name']] = event
         print('History:', self.history)
 
-    def event_sourcing(self, f):
-        def wrapper(operation_properties):
-            state = f(operation_properties)
+    @staticmethod
+    def event_sourcing(f):
+        def wrapper(tank_manager, tank):
+            state = f(tank_manager, tank)
             if state == States.SUCCESS or state == States.FAILURE:
                 raise ValueError("Invalid use of event sourcer!")
-            event = EventSourcer.create_event(operation_properties['operation_name'], operation_properties['tank'],
-                                              operation_properties['status'], operation_properties['operation_type'])
-            self.history[event['operation_name']] = event
-            print(event)
+            event = EventSourcer.create_event(state['operation_name'], state['tank'],
+                                              state['status'], state['operation_type'])
+            tank_manager.event_sourcer.add_to_history(event)
             # with open(EventSourcerProperty.FILE_PATH, 'w') as file:
-            #     file.write(state)
+            #     file.write(f'Operation name: {state["operation_name"]}'
+            #                f'Operation status: {state["status"]}')
         return wrapper

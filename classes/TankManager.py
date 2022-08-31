@@ -63,6 +63,5 @@ class TankManager:
             'operation_name': operation_name,
             'status': States.SUCCESS,
             'tank': tank
-
         }
         return operation_properties

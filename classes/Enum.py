@@ -3,5 +3,5 @@ class States:
     FAILURE = 0
 
 
-class EventSourcerProperty:
-    FILE_PATH = '/content'
+# class EventSourcerProperty:
+#     FILE_PATH = 'content/logs.txt'
