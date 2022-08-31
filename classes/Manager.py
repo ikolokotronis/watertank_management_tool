@@ -20,7 +20,7 @@ class Manager:
             '2': self.tank_manager.execute,
             '3': self.tank_holder.display_all_tanks,
             '4': self.tank_analyzer.handle_operations,
-            '5': self.event_sourcer.execute,
+            '5': self.event_sourcer.execute_state_checking,
             '6': self.exit
         }
 
