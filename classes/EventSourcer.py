@@ -1,6 +1,6 @@
 import datetime
 
-from classes.Enum import States
+from classes.Enum import States, EventSourcerProperty
 
 
 class EventSourcer:
@@ -76,7 +76,10 @@ class EventSourcer:
                                               state['status'], state['operation_type'],
                                               state['water_volume'])
             tank_manager.event_sourcer.add_to_history(event)
-            # with open(EventSourcerProperty.FILE_PATH, 'w') as file:
-            #     file.write(f'Operation name: {state["operation_name"]}'
-            #                f'Operation status: {state["status"]}')
+            with open(EventSourcerProperty.FILE_PATH, 'w') as file:
+                file.write(f'Operation name: {state["operation_name"]}\n'
+                           f'Operation status: {state["status"]}\n'
+                           f"Operation type: {state['operation_type']}\n"
+                           f'Tank: {state["tank"].name}\n'
+                           f'Water volume: {state["water_volume"]}\n')
         return wrapper

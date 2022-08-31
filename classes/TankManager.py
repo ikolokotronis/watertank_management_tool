@@ -43,7 +43,8 @@ class TankManager:
             operation_type = 'Pour water'
             if operation:
                 status = States.SUCCESS
-            status = States.FAILURE
+            else:
+                status = States.FAILURE
         elif operation_choice == '2':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
@@ -51,7 +52,8 @@ class TankManager:
             operation_type = 'Pour out water'
             if operation:
                 status = States.SUCCESS
-            status = States.FAILURE
+            else:
+                status = States.FAILURE
         elif operation_choice == '3':
             self.tank_holder.display_all_tanks()
             from_tank_choice = input('From tank: ')
@@ -62,7 +64,8 @@ class TankManager:
             operation_type = 'Transfer water'
             if operation:
                 status = States.SUCCESS
-            status = States.FAILURE
+            else:
+                status = States.FAILURE
         else:
             print('No such option!')
             status = States.FAILURE
