@@ -2,6 +2,7 @@ from classes.Enum import States
 from classes.Messenger import Messenger
 from constants.options import OPERATION_OPTIONS
 from exceptions.InvalidChoice import InvalidChoice
+from utils.most_common import most_common
 
 
 class TankAnalyzer:
@@ -52,11 +53,15 @@ class TankAnalyzer:
                 print('\n')
 
     def find_tank_with_most_fails(self):
-        pass  # TODO
-        # calculations = {}
-        # for key, value in self.event_sourcer.history.items():
-        #     print(key, value)
-        #     if key == 'status' and value == 0:
-        #         calculations[key] = value
-        # print(calculations)
+        failed_tank_statuses = {}
+        for key, value in self.event_sourcer.history.items():
+            for props_key, props_value in value.items():
+                if props_key == 'status' and props_value == 0:
+                    failed_tank_statuses[key] = value
+        if not failed_tank_statuses:
+            return States.FAILURE
+        failed_tank_names = []
+        for status_key, status_value in failed_tank_statuses.items():
+            failed_tank_names.append(status_value['tank'])
+        return most_common(failed_tank_names)
 
