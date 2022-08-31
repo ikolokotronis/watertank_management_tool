@@ -1,5 +1,5 @@
-Operation name: min
+Operation name: refill
 Operation status: 1
-Operation type: Pour out water
+Operation type: Pour water
 Tank: test
-Water volume: 10
+Water volume: 500

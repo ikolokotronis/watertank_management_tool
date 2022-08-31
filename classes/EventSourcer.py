@@ -23,7 +23,6 @@ class EventSourcer:
     def check_state(self, tank):
         state_volume = 0
         for key, value in self.history.items():
-            # print(key, value['tank_name'])
             if value['tank_name'] == tank.name:
                 items = [i for i in value.items()]
                 if 'Pour water' in items[2]:
@@ -38,7 +37,6 @@ class EventSourcer:
                     for props_key, props_value in items:
                         if props_key == 'water_volume':
                             state_volume += props_value
-        print(state_volume)
         if tank.water_volume == state_volume:
             print('OK')
             return States.SUCCESS
@@ -64,7 +62,6 @@ class EventSourcer:
 
     def add_to_history(self, event):
         self.history[event['operation_name']] = event
-        print('History:', self.history)
 
     @staticmethod
     def enable_sourcing(f):
