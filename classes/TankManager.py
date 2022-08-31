@@ -36,6 +36,7 @@ class TankManager:
         print('\n')
         operation_choice = input('Choose operation: ')
         operation_type = ''
+        volume_amount = ''
         if operation_choice == '1':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
@@ -61,6 +62,7 @@ class TankManager:
             'operation_choice': operation_choice,
             'operation_type': operation_type,
             'operation_name': operation_name,
+            'water_volume': volume_amount,
             'status': States.SUCCESS,
             'tank': tank
         }

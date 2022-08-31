@@ -9,7 +9,8 @@ class TankAnalyzer:
         self.options = {
             '1': self.find_tank_with_most_water_volume,
             '2': self.find_most_filled_tank,
-            '3': self.find_empty_tanks
+            '3': self.find_empty_tanks,
+            '4': self.find_tank_with_most_fails
         }
         self.tank_holder = tank_holder
         self.event_sourcer = event_sourcer
@@ -19,14 +20,9 @@ class TankAnalyzer:
             return States.FAILURE
         for i, option in enumerate(OPERATION_OPTIONS):
             print(f"{i+1}. {option}")
-        options = {
-            '1': self.find_tank_with_most_water_volume,
-            '2': self.find_most_filled_tank,
-            '3': self.find_empty_tanks
-        }
         choice = input('Your choice: ')
         try:
-            options.get(choice, Messenger.no_such_option)()
+            self.options.get(choice, Messenger.no_such_option)()
         except InvalidChoice:
             print("No such option!")
 
@@ -62,3 +58,13 @@ class TankAnalyzer:
                 print(f'Capacity: {tank.capacity}')
                 print(f'Water volume: {tank.water_volume}')
                 print('\n')
+
+    def find_tank_with_most_fails(self):
+        print('yeaas')
+        calculations = {}
+        for key, value in self.event_sourcer.history.items():
+            print(key, value)
+            if key == 'status' and value == 0:
+                calculations[key] = value
+        print(calculations)
+
