@@ -15,7 +15,7 @@ class EventSourcer:
         print('\n')
         return tank
 
-    def execute_state_checking(self):
+    def execute_state_check(self):
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
         self.check_state(tank)
