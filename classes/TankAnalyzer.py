@@ -11,7 +11,8 @@ class TankAnalyzer:
             '1': self.find_tank_with_most_water_volume,
             '2': self.find_most_filled_tank,
             '3': self.find_empty_tanks,
-            '4': self.find_tank_with_most_fails
+            '4': self.find_tank_with_most_fails,
+            '5': self.find_most_used_type
         }
         self.tank_holder = tank_holder
         self.event_sourcer = event_sourcer
@@ -66,3 +67,11 @@ class TankAnalyzer:
         print(f"\nTank with most fails: {most_common(failed_tank_names)}\n")
         return most_common(failed_tank_names)
 
+    def find_most_used_type(self):
+        types = []
+        for key, value in self.event_sourcer.history.items():
+            for props_key, props_value in value.items():
+                if props_key == 'operation_type':
+                    types.append(props_value)
+        print(f'Most common type: {most_common(types)}')
+        return most_common(types)
