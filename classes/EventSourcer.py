@@ -67,7 +67,7 @@ class EventSourcer:
         print('History:', self.history)
 
     @staticmethod
-    def event_sourcing(f):
+    def enable_sourcing(f):
         def wrapper(tank_manager, tank):
             state = f(tank_manager, tank)
             if state == States.SUCCESS or state == States.FAILURE:

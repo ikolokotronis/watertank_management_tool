@@ -27,7 +27,7 @@ class TankManager:
         tank = self.get_tank_choice()
         self.manage_tank_operations(tank)
 
-    @EventSourcer.event_sourcing
+    @EventSourcer.enable_sourcing
     def manage_tank_operations(self, tank):
         for i, option in enumerate(TANK_OPTIONS):  # one method
             print(i+1, option)
