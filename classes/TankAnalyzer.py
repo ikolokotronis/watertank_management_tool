@@ -16,8 +16,6 @@ class TankAnalyzer:
         self.event_sourcer = event_sourcer
 
     def handle_operations(self):
-        if not self.tank_holder.check_if_storage_is_empty():
-            return States.FAILURE
         for i, option in enumerate(OPERATION_OPTIONS):
             print(f"{i+1}. {option}")
         choice = input('Your choice: ')
@@ -27,8 +25,6 @@ class TankAnalyzer:
             print("No such option!")
 
     def find_tank_with_most_water_volume(self):
-        if not self.tank_holder.check_if_storage_is_empty():
-            return States.FAILURE
         tank = max(self.tank_holder.storage)
         print(f'Name: {tank.name}')
         print(f'Capacity: {tank.capacity}')
@@ -36,8 +32,6 @@ class TankAnalyzer:
         print('\n')
 
     def find_most_filled_tank(self):
-        if not self.tank_holder.check_if_storage_is_empty():
-            return States.FAILURE
         calculations = []
         for tank in self.tank_holder.storage:
             calculation = tank.capacity - tank.water_volume
@@ -50,8 +44,6 @@ class TankAnalyzer:
         print('\n')
 
     def find_empty_tanks(self):
-        if not self.tank_holder.check_if_storage_is_empty():
-            return States.FAILURE
         for i, tank in enumerate(self.tank_holder.storage):
             if tank.water_volume == 0:
                 print(f'{tank.name}')

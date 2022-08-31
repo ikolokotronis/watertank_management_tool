@@ -23,8 +23,6 @@ class TankManager:
         return tank
 
     def execute(self):
-        if self.tank_holder.check_if_storage_is_empty() == States.FAILURE:
-            return
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
         self.manage_tank_operations(tank)

@@ -12,7 +12,8 @@ class TankHolder:
         print('\n')
 
     def check_if_storage_is_empty(self):
-        if not self.storage:
+        print(self.storage)
+        if len(self.storage) == 0:
             print('No tanks stored!\n')
             return States.FAILURE
         return States.SUCCESS
