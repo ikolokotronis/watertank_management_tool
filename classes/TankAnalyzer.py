@@ -62,6 +62,7 @@ class TankAnalyzer:
             return States.FAILURE
         failed_tank_names = []
         for status_key, status_value in failed_tank_statuses.items():
-            failed_tank_names.append(status_value['tank'])
+            failed_tank_names.append(status_value['tank_name'])
+        print(f"\nTank with most fails: {most_common(failed_tank_names)}\n")
         return most_common(failed_tank_names)
 

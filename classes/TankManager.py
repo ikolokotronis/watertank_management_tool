@@ -35,33 +35,44 @@ class TankManager:
         operation_choice = input('Choose operation: ')
         operation_type = ''
         volume_amount = ''
+        status = ''
         if operation_choice == '1':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
-            tank.pour_water(volume_amount)
+            operation = tank.pour_water(volume_amount)
             operation_type = 'Pour water'
+            if operation:
+                status = States.SUCCESS
+            status = States.FAILURE
         elif operation_choice == '2':
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
-            tank.pour_out_water(volume_amount)
+            operation = tank.pour_out_water(volume_amount)
             operation_type = 'Pour out water'
+            if operation:
+                status = States.SUCCESS
+            status = States.FAILURE
         elif operation_choice == '3':
             self.tank_holder.display_all_tanks()
             from_tank_choice = input('From tank: ')
             from_tank = self.tank_holder.storage[int(from_tank_choice) - 1]
             volume_amount = int(input('Volume amount: '))
             operation_name = input('Name your operation: ')
-            tank.transfer_water(from_tank, volume_amount)
+            operation = tank.transfer_water(from_tank, volume_amount)
             operation_type = 'Transfer water'
+            if operation:
+                status = States.SUCCESS
+            status = States.FAILURE
         else:
             print('No such option!')
-            return
+            status = States.FAILURE
+            return status
         operation_properties = {
             'operation_choice': operation_choice,
             'operation_type': operation_type,
             'operation_name': operation_name,
             'water_volume': volume_amount,
-            'status': States.SUCCESS,
+            'status': status,
             'tank': tank
         }
         return operation_properties
