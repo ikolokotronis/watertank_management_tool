@@ -22,7 +22,7 @@ class TankManager:
         print('\n')
         return tank
 
-    def execute(self):
+    def execute_operation(self):
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
         self.manage_tank_operations(tank)

@@ -17,7 +17,7 @@ class Manager:
         self.tank_manager = TankManager(tank_holder=self.tank_holder, event_sourcer=self.event_sourcer)
         self.menu_options = {
             '1': self.tank_manager.create_new_tank,
-            '2': self.tank_manager.execute,
+            '2': self.tank_manager.execute_operation,
             '3': self.tank_holder.display_all_tanks,
             '4': self.tank_analyzer.handle_operations,
             '5': self.event_sourcer.execute_state_checking,
