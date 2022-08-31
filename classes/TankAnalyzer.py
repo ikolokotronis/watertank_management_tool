@@ -17,7 +17,7 @@ class TankAnalyzer:
         self.tank_holder = tank_holder
         self.event_sourcer = event_sourcer
 
-    def handle_operations(self):
+    def execute_analysis(self):
         for i, option in enumerate(OPERATION_OPTIONS):
             print(f"{i+1}. {option}")
         choice = input('Your choice: ')
