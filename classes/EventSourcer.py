@@ -74,7 +74,7 @@ class EventSourcer:
                                               state['status'], state['operation_type'],
                                               state['water_volume'])
             tank_manager.event_sourcer.add_to_history(event)
-            with open(EventSourcerProperty.FILE_PATH, 'w') as file:
+            with open(EventSourcerProperty.FILE_PATH, 'a') as file:
                 file.write(f'Operation name: {state["operation_name"]}\n'
                            f'Operation status: {state["status"]}\n'
                            f"Operation type: {state['operation_type']}\n"
