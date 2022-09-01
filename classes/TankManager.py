@@ -1,4 +1,4 @@
-from classes.Enum import States
+from enums.States import States
 from classes.EventSourcer import EventSourcer
 from properties.OptionsProperty import OptionsPropety
 from factories.TankFactory import TankFactory

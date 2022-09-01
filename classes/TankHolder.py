@@ -1,4 +1,4 @@
-from classes.Enum import States
+from enums.States import States
 
 
 class TankHolder:

@@ -1,4 +1,4 @@
-from classes.Enum import States
+from enums.States import States
 from classes.Messenger import Messenger
 from properties.OptionsProperty import OptionsPropety
 from exceptions.InvalidChoice import InvalidChoice

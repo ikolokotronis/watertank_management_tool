@@ -1,6 +1,6 @@
 import datetime
 
-from classes.Enum import States
+from enums.States import States
 from properties.EventSourcerProperty import EventSourcerProperty
 
 
