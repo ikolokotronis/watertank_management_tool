@@ -16,6 +16,8 @@ class EventSourcer:
         return tank
 
     def execute_state_check(self):
+        if self.tank_holder.validate_storage() == States.FAILURE:
+            return States.FAILURE
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
         self.check_state(tank)
@@ -38,12 +40,11 @@ class EventSourcer:
                         if props_key == 'water_volume':
                             state_volume += props_value
         if tank.water_volume == state_volume:
-            print('OK')
+            print('OK\n')
             return States.SUCCESS
         elif tank.water_volume != state_volume:
-            print('NOT OK')
+            print('NOT OK\n')
             return States.FAILURE
-        print('Something went wrong')
         return States.FAILURE
 
     @staticmethod

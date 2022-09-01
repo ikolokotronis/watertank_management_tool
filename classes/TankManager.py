@@ -11,18 +11,29 @@ class TankManager:
 
     def create_new_tank(self):
         name = input('Tank name: ')
-        capacity = int(input('Tank capacity: '))
+        try:
+            capacity = int(input('Tank capacity: '))
+        except ValueError:
+            print('Only numbers allowed!')
+            return States.FAILURE
         tank = TankFactory.produce(name, capacity)
         self.tank_holder.add_to_storage(tank)
 
     def get_tank_choice(self):
         tank_choice = int(input('Tank to manage: '))
-        tank = self.tank_holder.storage[tank_choice - 1]
+        tank = ''
+        try:
+            tank = self.tank_holder.storage[tank_choice - 1]
+        except IndexError:
+            print('No such tank!')
+            return States.FAILURE
         print(f'You chose: {tank.name}')
         print('\n')
         return tank
 
     def execute_operation(self):
+        if self.tank_holder.validate_storage() == States.FAILURE:
+            return States.FAILURE
         self.tank_holder.display_all_tanks()
         tank = self.get_tank_choice()
         self.manage_tank_operations(tank)

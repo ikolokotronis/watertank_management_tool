@@ -11,14 +11,15 @@ class TankHolder:
         print('Tank added to storage')
         print('\n')
 
-    def check_if_storage_is_empty(self):
-        print(self.storage)
+    def validate_storage(self):
         if len(self.storage) == 0:
             print('No tanks stored!\n')
             return States.FAILURE
         return States.SUCCESS
 
     def display_all_tanks(self):
+        if self.validate_storage() == States.FAILURE:
+            return States.FAILURE
         for i, tank in enumerate(self.storage):
             print('\n')
             print(f'{i+1}. {tank.name}')

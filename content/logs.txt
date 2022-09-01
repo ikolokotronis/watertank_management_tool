@@ -1,5 +1,5 @@
-Operation name: refill
+Operation name: fill
 Operation status: 1
 Operation type: Pour water
 Tank: test
-Water volume: 500
+Water volume: 250

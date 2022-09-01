@@ -18,6 +18,8 @@ class TankAnalyzer:
         self.event_sourcer = event_sourcer
 
     def execute_analysis(self):
+        if self.tank_holder.validate_storage() == States.FAILURE:
+            return States.FAILURE
         for i, option in enumerate(OPERATION_OPTIONS):
             print(f"{i+1}. {option}")
         choice = input('Your choice: ')
