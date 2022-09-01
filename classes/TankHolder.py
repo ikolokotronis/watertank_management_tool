@@ -22,7 +22,7 @@ class TankHolder:
             return States.FAILURE
         for i, tank in enumerate(self.storage):
             print('\n')
-            print(f'{i+1}. {tank.name}')
+            print(f'{i+1} {tank.name}')
             print(f'Capacity: {tank.capacity}')
             print(f'Water volume: {tank.water_volume}')
             print('\n')

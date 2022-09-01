@@ -18,8 +18,9 @@ class TankManager:
             return States.FAILURE
         tank = TankFactory.produce(name, capacity)
         self.tank_holder.add_to_storage(tank)
+        print(f'Tank {name} created successfully!\n')
 
-    def get_tank_choice(self):
+    def get_tank_from_choice(self):
         tank_choice = int(input('Tank to manage: '))
         tank = ''
         try:
@@ -35,8 +36,14 @@ class TankManager:
         if self.tank_holder.validate_storage() == States.FAILURE:
             return States.FAILURE
         self.tank_holder.display_all_tanks()
-        tank = self.get_tank_choice()
-        self.manage_tank_operations(tank)
+        try:
+            tank = self.get_tank_from_choice()
+        except IndexError:
+            print('No such tank!')
+            return States.FAILURE
+        else:
+            self.manage_tank_operations(tank)
+        return States.SUCCESS
 
     @EventSourcer.enable_sourcing
     def manage_tank_operations(self, tank):
@@ -48,7 +55,11 @@ class TankManager:
         volume_amount = ''
         status = ''
         if operation_choice == '1':
-            volume_amount = int(input('Volume amount: '))
+            try:
+                volume_amount = int(input('Volume amount: '))
+            except ValueError:
+                print('Only numbers allowed!')
+                return States.FAILURE
             operation_name = input('Name your operation: ')
             operation = tank.pour_water(volume_amount)
             operation_type = 'Pour water'
@@ -57,7 +68,11 @@ class TankManager:
             else:
                 status = States.FAILURE
         elif operation_choice == '2':
-            volume_amount = int(input('Volume amount: '))
+            try:
+                volume_amount = int(input('Volume amount: '))
+            except ValueError:
+                print('Only numbers allowed!')
+                return States.FAILURE
             operation_name = input('Name your operation: ')
             operation = tank.pour_out_water(volume_amount)
             operation_type = 'Pour out water'
@@ -68,8 +83,16 @@ class TankManager:
         elif operation_choice == '3':
             self.tank_holder.display_all_tanks()
             from_tank_choice = input('From tank: ')
-            from_tank = self.tank_holder.storage[int(from_tank_choice) - 1]
-            volume_amount = int(input('Volume amount: '))
+            try:
+                from_tank = self.tank_holder.storage[int(from_tank_choice) - 1]
+            except ValueError and IndexError:
+                print('No such tank!')
+                return States.FAILURE
+            try:
+                volume_amount = int(input('Volume amount: '))
+            except ValueError:
+                print('Only numbers allowed!')
+                return States.FAILURE
             operation_name = input('Name your operation: ')
             operation = tank.transfer_water(from_tank, volume_amount)
             operation_type = 'Transfer water'
@@ -89,4 +112,6 @@ class TankManager:
             'status': status,
             'tank': tank
         }
+        print(f'\nOperation {operation_type} on tank {tank.name} finished successfully')
+        print(f'Tank {tank.name} has now {tank.water_volume} water volume\n')
         return operation_properties

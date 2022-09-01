@@ -69,7 +69,7 @@ class EventSourcer:
         def wrapper(tank_manager, tank):
             state = f(tank_manager, tank)
             if state == States.SUCCESS or state == States.FAILURE:
-                raise ValueError("Invalid use of event sourcer!")
+                 return
             event = EventSourcer.create_event(state['operation_name'], state['tank'],
                                               state['status'], state['operation_type'],
                                               state['water_volume'])
