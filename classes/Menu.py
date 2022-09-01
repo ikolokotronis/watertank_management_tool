@@ -1,9 +1,9 @@
-from constants.options import MENU_OPTIONS
+from properties.OptionsProperty import OptionsPropety
 
 
 class Menu:
     def __init__(self):
-        self.options = MENU_OPTIONS.copy()
+        self.options = OptionsPropety.MENU_OPTIONS.copy()
 
     def print_menu(self):
         for i, option in enumerate(self.options):

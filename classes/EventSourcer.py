@@ -1,6 +1,7 @@
 import datetime
 
-from classes.Enum import States, EventSourcerProperty
+from classes.Enum import States
+from properties.EventSourcerProperty import EventSourcerProperty
 
 
 class EventSourcer:
@@ -9,10 +10,10 @@ class EventSourcer:
         self.history = {}
 
     def get_tank_choice(self):
-        tank_choice = int(input('Tank choice: '))
+        tank_choice = int(input("Tank choice: "))
         tank = self.tank_holder.storage[tank_choice - 1]
-        print(f'You chose: {tank.name}')
-        print('\n')
+        print(f"You chose: {tank.name}")
+        print("\n")
         return tank
 
     def execute_state_check(self):
@@ -25,25 +26,25 @@ class EventSourcer:
     def check_state(self, tank):
         state_volume = 0
         for key, value in self.history.items():
-            if value['tank_name'] == tank.name:
+            if value["tank_name"] == tank.name:
                 items = [i for i in value.items()]
-                if 'Pour water' in items[2]:
+                if "Pour water" in items[2]:
                     for props_key, props_value in items:
-                        if props_key == 'water_volume':
+                        if props_key == "water_volume":
                             state_volume += props_value
-                elif 'Pour out water' in items[2]:
+                elif "Pour out water" in items[2]:
                     for props_key, props_value in items:
-                        if props_key == 'water_volume':
+                        if props_key == "water_volume":
                             state_volume -= props_value
-                elif 'Transfer water' in items[2]:
+                elif "Transfer water" in items[2]:
                     for props_key, props_value in items:
-                        if props_key == 'water_volume':
+                        if props_key == "water_volume":
                             state_volume += props_value
         if tank.water_volume == state_volume:
-            print('OK\n')
+            print("OK\n")
             return States.SUCCESS
         elif tank.water_volume != state_volume:
-            print('NOT OK\n')
+            print("NOT OK\n")
             return States.FAILURE
         return States.FAILURE
 
@@ -52,32 +53,39 @@ class EventSourcer:
         now = datetime.datetime.now()
         date_time = now.strftime("%d/%m/%Y %H:%M:%S")
         event = {
-            'operation_name': operation_name,
-            'tank_name': tank.name,
-            'operation_type': operation_type,
-            'water_volume': water_volume,
-            'status': status,
-            'date_time': date_time
+            "operation_name": operation_name,
+            "tank_name": tank.name,
+            "operation_type": operation_type,
+            "water_volume": water_volume,
+            "status": status,
+            "date_time": date_time,
         }
         return event
 
     def add_to_history(self, event):
-        self.history[event['operation_name']] = event
+        self.history[event["operation_name"]] = event
 
     @staticmethod
     def enable_sourcing(f):
         def wrapper(tank_manager, tank):
             state = f(tank_manager, tank)
             if state == States.SUCCESS or state == States.FAILURE:
-                 return
-            event = EventSourcer.create_event(state['operation_name'], state['tank'],
-                                              state['status'], state['operation_type'],
-                                              state['water_volume'])
+                return States.FAILURE
+            event = EventSourcer.create_event(
+                state["operation_name"],
+                state["tank"],
+                state["status"],
+                state["operation_type"],
+                state["water_volume"],
+            )
             tank_manager.event_sourcer.add_to_history(event)
-            with open(EventSourcerProperty.FILE_PATH, 'a') as file:
-                file.write(f'Operation name: {state["operation_name"]}\n'
-                           f'Operation status: {state["status"]}\n'
-                           f"Operation type: {state['operation_type']}\n"
-                           f'Tank: {state["tank"].name}\n'
-                           f'Water volume: {state["water_volume"]}\n')
+            with open(EventSourcerProperty.FILE_PATH, "a") as file:
+                file.write(
+                    f'Operation name: {state["operation_name"]}\n'
+                    f'Operation status: {state["status"]}\n'
+                    f"Operation type: {state['operation_type']}\n"
+                    f'Tank: {state["tank"].name}\n'
+                    f'Water volume: {state["water_volume"]}\n'
+                )
+
         return wrapper

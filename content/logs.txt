@@ -8,3 +8,8 @@ Operation status: 1
 Operation type: Pour water
 Tank: test
 Water volume: 500
+Operation name: refill
+Operation status: 1
+Operation type: Pour water
+Tank: test
+Water volume: 500
