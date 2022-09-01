@@ -2,7 +2,7 @@ from classes.Enum import States
 from classes.Messenger import Messenger
 from properties.OptionsProperty import OptionsPropety
 from exceptions.InvalidChoice import InvalidChoice
-from utils.most_common import most_common
+from utils.most_common import Helpers
 
 
 class TankAnalyzer:
@@ -80,8 +80,8 @@ class TankAnalyzer:
         failed_tank_names = []
         for status_key, status_value in failed_tank_statuses.items():
             failed_tank_names.append(status_value["tank_name"])
-        print(f"\nTank with most fails: {most_common(failed_tank_names)}\n")
-        return most_common(failed_tank_names)
+        print(f"\nTank with most fails: {Helpers.most_common(failed_tank_names)}\n")
+        return Helpers.most_common(failed_tank_names)
 
     def find_most_used_type(self):
         types = []
@@ -91,9 +91,9 @@ class TankAnalyzer:
                     types.append(props_value)
         most_common_type = ""
         try:
-            most_common_type = most_common(types)
+            most_common_type = Helpers.most_common(types)
         except ValueError:
             print("No operations have been done yet!\n")
             return States.FAILURE
         print(f"Most common type: {most_common_type}\n")
-        return most_common(types)
+        return Helpers.most_common(types)
