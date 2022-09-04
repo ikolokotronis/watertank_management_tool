@@ -58,7 +58,7 @@ class TankManager:
             status = States.SUCCESS
         else:
             status = States.FAILURE
-        return operation_name, operation_type
+        return operation_name, operation_type, volume_amount, status
 
     def handle_pour_out_water(self, tank):
         try:
@@ -73,7 +73,7 @@ class TankManager:
             status = States.SUCCESS
         else:
             status = States.FAILURE
-        return operation_name, operation_type
+        return operation_name, operation_type, volume_amount, status
 
     def handle_transfer_water(self, tank):
         self.tank_holder.display_all_tanks()
@@ -95,7 +95,7 @@ class TankManager:
             status = States.SUCCESS
         else:
             status = States.FAILURE
-        return operation_name, operation_type
+        return operation_name, operation_type, volume_amount, status
 
     @EventSourcer.enable_sourcing
     def manage_tank_operations(self, tank):
@@ -108,11 +108,11 @@ class TankManager:
         volume_amount = ""
         status = ""
         if operation_choice == "1":
-            operation_name, operation_type = self.handle_pour_water(tank)
+            operation_name, operation_type, volume_amount, status = self.handle_pour_water(tank)
         elif operation_choice == "2":
-            operation_name, operation_type = self.handle_pour_out_water(tank)
+            operation_name, operation_type, volume_amount, status = self.handle_pour_out_water(tank)
         elif operation_choice == "3":
-            operation_name, operation_type = self.handle_transfer_water(tank)
+            operation_name, operation_type, volume_amount, status = self.handle_transfer_water(tank)
         else:
             print("No such option!")
             status = States.FAILURE
