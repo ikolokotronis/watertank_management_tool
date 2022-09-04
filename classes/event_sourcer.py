@@ -95,4 +95,5 @@ class EventSourcer:
             )
             tank_manager.event_sourcer.add_to_history(event)
             tank_manager.event_sourcer.write_to_logs(state)
+
         return wrapper
