@@ -1,8 +1,8 @@
-from enums.States import States
-from classes.Messenger import Messenger
-from properties.OptionsProperty import OptionsPropety
-from exceptions.InvalidChoice import InvalidChoice
-from utils.Helpers import Helpers
+from enums.states import States
+from classes.messenger import Messenger
+from properties.options_property import OptionsPropety
+from exceptions.invalid_choice import InvalidChoice
+from utils.helpers import Helpers
 
 
 class TankAnalyzer:

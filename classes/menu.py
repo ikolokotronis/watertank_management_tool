@@ -1,4 +1,4 @@
-from properties.OptionsProperty import OptionsPropety
+from properties.options_property import OptionsPropety
 
 
 class Menu:

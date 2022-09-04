@@ -1,4 +1,4 @@
-from classes.Tank import Tank
+from classes.tank import Tank
 
 
 class TankFactory:

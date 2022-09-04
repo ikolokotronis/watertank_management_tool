@@ -1,4 +1,4 @@
-from exceptions.InvalidChoice import InvalidChoice
+from exceptions.invalid_choice import InvalidChoice
 
 
 class Messenger:

@@ -1,10 +1,10 @@
-from classes.EventSourcer import EventSourcer
-from classes.Menu import Menu
-from classes.Messenger import Messenger
-from classes.TankAnalyzer import TankAnalyzer
-from classes.TankManager import TankManager
-from classes.TankHolder import TankHolder
-from exceptions.InvalidChoice import InvalidChoice
+from classes.event_sourcer import EventSourcer
+from classes.menu import Menu
+from classes.messenger import Messenger
+from classes.tank_analyzer import TankAnalyzer
+from classes.tank_manager import TankManager
+from classes.tank_holder import TankHolder
+from exceptions.invalid_choice import InvalidChoice
 
 
 class Manager:
