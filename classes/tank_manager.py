@@ -114,6 +114,8 @@ class TankManager:
                 volume_amount,
                 status,
             ) = self.handle_pour_water(tank)
+            print('Water poured in!')
+            print(f'Tank {tank.name} now has {tank.water_volume} ')
         elif operation_choice == "2":
             (
                 operation_name,
@@ -121,6 +123,8 @@ class TankManager:
                 volume_amount,
                 status,
             ) = self.handle_pour_out_water(tank)
+            print('Water poured out!')
+            print(f'Tank {tank.name} now has {tank.water_volume} ')
         elif operation_choice == "3":
             (
                 operation_name,
@@ -128,6 +132,8 @@ class TankManager:
                 volume_amount,
                 status,
             ) = self.handle_transfer_water(tank)
+            print(f'Water transferred!')
+            print(f'Tank {tank.name} now has {tank.water_volume} ')
         else:
             print("No such option!")
             status = States.FAILURE

@@ -2,20 +2,23 @@ import datetime
 
 from enums.states import States
 from properties.event_sourcer_property import EventSourcerProperty
-from tank_holder import TankHolder
 
 
 class EventSourcer:
-    def __init__(self, tank_holder: TankHolder) -> None:
+    def __init__(self, tank_holder):
         self.tank_holder = tank_holder
         self.history = {}
 
     def get_tank_choice(self):
         tank_choice = int(input("Tank choice: "))
-        tank = self.tank_holder.storage[tank_choice - 1]
-        print(f"You chose: {tank.name}")
-        print("\n")
-        return tank
+        try:
+            tank = self.tank_holder.storage[tank_choice - 1]
+        except IndexError:
+            print('No such tank!')
+        else:
+            print(f"You chose: {tank.name}")
+            print("\n")
+            return tank
 
     def execute_state_check(self):
         if self.tank_holder.validate_storage() == States.FAILURE:

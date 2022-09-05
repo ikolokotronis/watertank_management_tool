@@ -36,6 +36,7 @@ class TankAnalyzer:
         max_water_volume = max([tank.water_volume for tank in self.tank_holder.storage])
         tank_index = water_volumes.index(max_water_volume)
         tank = self.tank_holder.storage[tank_index]
+        print('Tank with most water volume:\n')
         print(f"Name: {tank.name}")
         print(f"Capacity: {tank.capacity}")
         print(f"Water volume: {tank.water_volume}")
@@ -50,6 +51,7 @@ class TankAnalyzer:
             calculations.append(calculation)
         tank_index = calculations.index(min(calculations))
         tank = self.tank_holder.storage[tank_index]
+        print('Most filled tank:\n1')
         print(f"Name: {tank.name}")
         print(f"Capacity: {tank.capacity}")
         print(f"Water volume: {tank.water_volume}")
