@@ -2,10 +2,11 @@ import datetime
 
 from enums.states import States
 from properties.event_sourcer_property import EventSourcerProperty
+from tank_holder import TankHolder
 
 
 class EventSourcer:
-    def __init__(self, tank_holder):
+    def __init__(self, tank_holder: TankHolder) -> None:
         self.tank_holder = tank_holder
         self.history = {}
 
@@ -26,9 +27,9 @@ class EventSourcer:
     def calculate_state_volume(self, tank):
         state_volume = 0
         for key, value in self.history.items():
-            if value["tank_name"] == tank.name:
+            if value["tank_name"] == tank.name: # TODO -> extract into seperated methods; replace imperative with declarative
                 items = [i for i in value.items()]
-                if "Pour water" in items[2]:
+                if "Pour water" in items[2]:  # remove string, make class
                     for props_key, props_value in items:
                         if props_key == "water_volume":
                             state_volume += props_value
@@ -47,9 +48,7 @@ class EventSourcer:
         if tank.water_volume == state_volume:
             print("OK\n")
             return States.SUCCESS
-        elif tank.water_volume != state_volume:
-            print("NOT OK\n")
-            return States.FAILURE
+        print("NOT OK\n")
         return States.FAILURE
 
     @staticmethod

@@ -68,7 +68,7 @@ class TankAnalyzer:
             print("There are no empty tanks!\n")
             return States.FAILURE
 
-    def find_tank_with_most_fails(self):
+    def find_tank_with_most_fails(self):  # TODO ***
         failed_tank_statuses = {}
         for key, value in self.event_sourcer.history.items():
             for props_key, props_value in value.items():
@@ -89,7 +89,7 @@ class TankAnalyzer:
             for props_key, props_value in value.items():
                 if props_key == "operation_type":
                     types.append(props_value)
-        most_common_type = ""
+        most_common_type = ""  # TODO as else
         try:
             most_common_type = Helpers.most_common(types)
         except ValueError:
