@@ -71,12 +71,13 @@ class EventSourcer:
     def add_to_history(self, event):
         self.history[event["operation_name"]] = event
 
-    def write_to_logs(self, state):
+    @classmethod
+    def write_to_logs(cls, state):
         with open(EventSourcerProperty.FILE_PATH, "a") as file:
             file.write(
                 f'Operation name: {state["operation_name"]}\n'
                 f'Operation status: {state["status"]}\n'
-                f"Operation type: {state['operation_type']}\n"
+                f'Operation type: {state["operation_type"]}\n'
                 f'Tank: {state["tank"].name}\n'
                 f'Water volume: {state["water_volume"]}\n'
             )
